@@ -42,6 +42,8 @@ const style = StyleSheet.create({
 /* eslint-enable */
 const Block = ({
   children,
+  gap,
+  isLastChild,
   ...props
 }, {
   gridSizeClass,
@@ -59,13 +61,19 @@ const Block = ({
   const constantSize = { [styleProperty]: size };
   const sizeStyle = (size === 'stretch') ? style.stretchSize : constantSize;
 
+  // Generate block gap
+  const gapStyle = {
+    ...gridContentDirection === VERTICAL &&
+    !isLastChild ? { marginBottom: gap } : { marginRight: gap },
+  };
+
   // flexDirection depends on direction
   const directionStyle = {
     flexDirection: (gridContentDirection === VERTICAL ? 'column' : 'row'),
   };
 
   return (
-    <View style={[directionStyle, sizeStyle, props.style]}>
+    <View style={[directionStyle, sizeStyle, gapStyle, props.style]}>
       {children}
     </View>
   );
@@ -73,6 +81,8 @@ const Block = ({
 
 Block.defaultProps = {
   children: null,
+  isLastChild: false,
+  gap: 0,
 };
 
 Block.contextTypes = {
@@ -85,6 +95,8 @@ Block.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  isLastChild: PropTypes.bool,
+  gap: PropTypes.number,
   ...BlockProps,
 };
 
