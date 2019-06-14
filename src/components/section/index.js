@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
  *
  * @type {React.StatelessComponent<{stretch?: boolean, style?: any, children: any, gap?: number}>}
  */
-const Section = ({ children, style, stretch, gap }, { gridContentDirection, gridStretch }) => {
+const Section = ({
+  children, style, stretch, gap,
+}, { gridContentDirection, gridStretch }) => {
   if (process.env.NODE_ENV === 'development') {
     warn(
       !gridStretch && !!stretch,
@@ -45,12 +47,10 @@ const Section = ({ children, style, stretch, gap }, { gridContentDirection, grid
         style,
       ]}
     >
-    {React.Children.map(children, (child, itr) => {
-      return React.cloneElement(child, {
+      {React.Children.map(children, (child, itr) => React.cloneElement(child, {
         isLastChild: children.length === (itr + 1),
         gap,
-      })
-    })}
+      }))}
     </View>
   );
 };
@@ -69,14 +69,12 @@ Section.propTypes = {
   style: ViewPropTypes.style,
   stretch: PropTypes.bool,
   gap: PropTypes.number,
-  isLastChild: PropTypes.bool,
 };
 
 Section.defaultProps = {
   style: {},
   stretch: false,
-  gap : 0,
-  isLastChild : false,
+  gap: 0,
 };
 
 export default Section;

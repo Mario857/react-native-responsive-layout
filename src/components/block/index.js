@@ -62,10 +62,9 @@ const Block = ({
   const sizeStyle = (size === 'stretch') ? style.stretchSize : constantSize;
 
   // Generate block gap
-  const gapStyle = {
-    ...gridContentDirection === VERTICAL &&
-    !isLastChild ? { marginBottom: gap } : { marginRight: gap },
-  };
+  const isDirectionFlipped = (gridContentDirection === VERTICAL) !== (size === 'stretch');
+  const gapStyle = !isLastChild &&
+    { ...isDirectionFlipped ? { marginBottom: gap } : { marginRight: gap } };
 
   // flexDirection depends on direction
   const directionStyle = {
