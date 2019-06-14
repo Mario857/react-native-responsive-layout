@@ -92,6 +92,5 @@ export default () => (
         </Section>
       </Block>
     </Section>
-
   </Grid>
 );
